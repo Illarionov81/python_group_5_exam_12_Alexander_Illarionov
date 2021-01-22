@@ -30,7 +30,7 @@ from django.views.generic import CreateView
 #     from_url = request.META.get('HTTP_REFERER', 'products')
 #     logout(request)
 #     return redirect(from_url)
-from webapp.models import Project
+# from webapp.models import Project
 
 
 class RegisterView(CreateView):
