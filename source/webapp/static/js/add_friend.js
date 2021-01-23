@@ -41,7 +41,6 @@ async function AddFriend(event) {
     event.preventDefault()
     let ButtonAddFriend = event.target;
     let id = ButtonAddFriend.id;
-    let my_user = ButtonAddFriend.My
     let url = ButtonAddFriend.href;
     try {
         let response = await makeRequest(url, 'POST', {'id': id}).then((response) => response.json());
@@ -50,21 +49,20 @@ async function AddFriend(event) {
     catch (error) {
         console.log(error);
     }
+    location.reload()
 }
 
-// async function Done_with_hint(event) {
-//     event.preventDefault()
-//     let ButtonDone_with_hint = event.target;
-//     let id = ButtonDone_with_hint.id;
-//     let url = ButtonDone_with_hint.href;
-//     ButtonDone_with_hint.href = '#';
-//     try {
-//         let response = await makeRequest(url, 'POST', {'id': id}).then((response) => response.json());
-//         console.log(response)
-//         ButtonDone_with_hint.innerText = 'Hint ' + response['count']
-//         ButtonDone_with_hint.href = url;
-//     }
-//     catch (error) {
-//         console.log(error);
-//     }
-// }
+async function DeleteFriend(event) {
+    event.preventDefault()
+    let ButtonDeleteFriend = event.target;
+    let id = ButtonDeleteFriend.id;
+    let url = ButtonDeleteFriend.href;
+    try {
+        let response = await makeRequest(url, 'POST', {'id': id}).then((response) => response.json());
+        console.log(response)
+    }
+    catch (error) {
+        console.log(error);
+    }
+    location.reload()
+}

@@ -1,0 +1,46 @@
+{% load static %}
+<hr>
+<div class="row">
+    <div class="col col-lg-12 mt-5 pl-5 ml-5">
+        {% if is_paginated %}
+            {% include 'partial/pagination.html' %}
+        {% endif %}
+    </div>
+</div>
+
+    {% for friend in friends_list %}
+        {% if friend != request.user %}
+            <div class="row mt-4">
+                <div class="col col-lg-2 pl-5">
+                    {% if friend.profile.avatar %}
+                        <img  src="{{ friend.profile.avatar.url }}" width="125px" height="autho" alt="user picture">
+                    {% else %}
+                        <img src="{% static "image/ava_.png" %}" width="125px" height="autho" alt="ava">
+                    {% endif %}
+                </div>
+                <div class="col col-lg-5">
+                    <p>
+                        Имя: <a href="{% url 'accounts:detail' friend.pk %}">{{ friend.first_name|default:friend.username }}</a>,
+                        Фамилия: <a href="{% url 'accounts:detail' friend.pk %}">{{ friend.last_name|default:friend.username }}</a>
+                    </p>
+                </div>
+                <div class="col col-lg-5">
+                    <p>
+                        <a href='{% url 'accounts:delete_friend' %}' class="btn btn-warning my_button" onclick="DeleteFriend(event)"
+                           id="{{ friend.pk }}">Удалить из друзей</a>
+                    </p>
+                </div>
+            </div>
+            <hr class="mt-0">
+        {% endif %}
+        {% empty %}
+        <h2 class="text-center">Нет друзей</h2>
+    <hr>
+{% endfor %}
+<div class="row">
+    <div class="col col-lg-12 mb-5 pl-5 ml-5">
+        {% if is_paginated %}
+            {% include 'partial/pagination.html' %}
+        {% endif %}
+    </div>
+</div>

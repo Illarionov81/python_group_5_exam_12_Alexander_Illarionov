@@ -34,7 +34,7 @@ class RegisterView(CreateView):
         if not next_url:
             next_url = self.request.POST.get('next')
         if not next_url:
-            next_url = reverse('index')
+            next_url = reverse('users')
         return next_url
 
 
@@ -48,21 +48,22 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
-        # projects_list, page, is_paginated = self.paginate_comments(user)
-        # # context['projects_list'] = projects_list
-        # context['page_obj'] = page
-        # context['is_paginated'] = is_paginated
+        user_profile = get_object_or_404(Profile, pk=user.pk)
+        friends_list, page, is_paginated = self.paginate_comments(user_profile)
+        context['friends_list'] = friends_list
+        context['page_obj'] = page
+        context['is_paginated'] = is_paginated
         return context
 
-    # def paginate_comments(self, user):
-    #     project = user.project.filter(is_deleted=False).order_by('starts_date')
-    #     if project.count() > 0:
-    #         paginator = Paginator(project, self.paginate_project_by, orphans=self.paginate_project_orphans)
-    #         page = paginator.get_page(self.request.GET.get('page', 1))
-    #         is_paginated = paginator.num_pages > 1
-    #         return page.object_list, page, is_paginated
-    #     else:
-    #         return project, None, False
+    def paginate_comments(self, user):
+        friend = user.friend.all()
+        if friend.count() > 0:
+            paginator = Paginator(friend, self.paginate_project_by, orphans=self.paginate_project_orphans)
+            page = paginator.get_page(self.request.GET.get('page', 1))
+            is_paginated = paginator.num_pages > 1
+            return page.object_list, page, is_paginated
+        else:
+            return friend, None, False
 
 
 class AllUserView(PermissionRequiredMixin, ListView):
@@ -72,6 +73,13 @@ class AllUserView(PermissionRequiredMixin, ListView):
     paginate_by = 5
     paginate_orphans = 1
     permission_required = "auth.view_user"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        profile = get_object_or_404(Profile, pk=user.pk)
+        context['friends'] = profile.friend.all()
+        return context
 
 
 class UserPasswordChangeView(UserPassesTestMixin, UpdateView):
@@ -141,4 +149,18 @@ class AddFriend(View):
             profile.save()
         else:
             print('уже есть')
-        return JsonResponse({'status': 'ok'})
+        return reverse('users')
+
+
+class DeleteFriend(View):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        friend = get_user_model().objects.get(pk=data['id'])
+        user = get_user_model().objects.get(pk=self.request.user.pk)
+        profile = get_object_or_404(Profile, pk=user.pk)
+        if friend in profile.friend.all():
+            profile.friend.remove(friend)
+            profile.save()
+        else:
+            print('нет')
+        return reverse('accounts:detail')
