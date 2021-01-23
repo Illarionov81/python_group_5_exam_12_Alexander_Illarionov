@@ -1,0 +1,132 @@
+[
+{
+  "model": "webapp.message",
+  "pk": 2,
+  "fields": {
+    "message": "kjn",
+    "author": 1,
+    "recipient": 3,
+    "sent_time": "2021-01-23T09:57:21.938Z"
+  }
+},
+{
+  "model": "webapp.message",
+  "pk": 3,
+  "fields": {
+    "message": "kjn",
+    "author": 1,
+    "recipient": 3,
+    "sent_time": "2021-01-23T09:57:39.548Z"
+  }
+},
+{
+  "model": "webapp.message",
+  "pk": 4,
+  "fields": {
+    "message": "mbvkghvkv",
+    "author": 1,
+    "recipient": 4,
+    "sent_time": "2021-01-23T10:00:31.369Z"
+  }
+},
+{
+  "model": "webapp.message",
+  "pk": 5,
+  "fields": {
+    "message": "\u0440\u0438\u0434\u0440\u043e\u0438",
+    "author": 3,
+    "recipient": 4,
+    "sent_time": "2021-01-23T10:35:35.790Z"
+  }
+},
+{
+  "model": "webapp.message",
+  "pk": 6,
+  "fields": {
+    "message": "\u0447\u0430\u0438\u0447\u0432\u0430\u0438\u0447\u0438",
+    "author": 3,
+    "recipient": 1,
+    "sent_time": "2021-01-23T10:47:01.452Z"
+  }
+},
+{
+  "model": "webapp.message",
+  "pk": 7,
+  "fields": {
+    "message": "xfbxxb \r\nvzdvf",
+    "author": 3,
+    "recipient": 4,
+    "sent_time": "2021-01-23T10:54:10.312Z"
+  }
+},
+{
+  "model": "webapp.message",
+  "pk": 8,
+  "fields": {
+    "message": "\u0447\u0441\u043f\u0438\u0447\u0432\u0438",
+    "author": 3,
+    "recipient": 4,
+    "sent_time": "2021-01-23T11:51:24.117Z"
+  }
+},
+{
+  "model": "webapp.message",
+  "pk": 9,
+  "fields": {
+    "message": "\u043c\u0432\u044b\u0448\u0433\u0438\u044b\u0443\u0434\u043a\u0438",
+    "author": 3,
+    "recipient": 5,
+    "sent_time": "2021-01-23T11:51:41.077Z"
+  }
+},
+{
+  "model": "webapp.message",
+  "pk": 10,
+  "fields": {
+    "message": "\u044b\u0432\u0430\u0448\u0433\u043c\u0438\u0430\u043c\u0434\u043e\u0438\u0434\u0438\u043e\u043c",
+    "author": 3,
+    "recipient": 6,
+    "sent_time": "2021-01-23T11:51:48.856Z"
+  }
+},
+{
+  "model": "webapp.message",
+  "pk": 11,
+  "fields": {
+    "message": "\u0434\u043b\u043e\u0430\u044b\u0434\u043b\u043e\u0442 \u0430\u043c\u0434\u0432\u044b\u0442\u0438\u043e",
+    "author": 3,
+    "recipient": 1,
+    "sent_time": "2021-01-23T11:51:55.453Z"
+  }
+},
+{
+  "model": "webapp.message",
+  "pk": 12,
+  "fields": {
+    "message": "\u0434\u0440\u043e\u0438\u043c\u0434\u043c\u0430\u0434\u044f\u0438\u043e\u0430\u043c",
+    "author": 3,
+    "recipient": 4,
+    "sent_time": "2021-01-23T11:52:02.918Z"
+  }
+},
+{
+  "model": "webapp.message",
+  "pk": 13,
+  "fields": {
+    "message": "kjbvzdfljb",
+    "author": 5,
+    "recipient": 4,
+    "sent_time": "2021-01-23T13:06:41.907Z"
+  }
+},
+{
+  "model": "webapp.message",
+  "pk": 14,
+  "fields": {
+    "message": ",kjhbvlSZKJv.j\r\nbxzdfnd vjk,zdb dv\r\nzdv kzjhg v",
+    "author": 5,
+    "recipient": 1,
+    "sent_time": "2021-01-23T13:08:19.215Z"
+  }
+}
+]
