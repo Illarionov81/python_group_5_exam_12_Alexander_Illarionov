@@ -1,5 +1,5 @@
 {%  extends 'people_base.html' %}
-
+{% load static %}
 {% block title %}Users: {% endblock %}
 
 {% block contant %}
@@ -10,17 +10,31 @@
 </div>
     <hr>
     {% for user in users_list %}
-<div class="row mt-4">
-    <div class="col col-lg-2 pl-5">
-        № {{ forloop.counter }}.
-    </div>
-    <div class="col col-lg-10">
-        <p><b>User Name: </b>
-            <a href="{% url 'accounts:detail' user.pk %}"> {{ user.get_full_name|default:user.username }}</a>
-        </p>
-    </div>
-</div>
-<hr class="mt-0">
+        {% if user != request.user %}
+            <div class="row mt-4">
+                <div class="col col-lg-2 pl-5">
+                    {% if user.profile.avatar %}
+                        <img  src="{{ user.profile.avatar.url }}" width="125px" height="autho" alt="user picture">
+                    {% else %}
+                        <img src="{% static "image/ava_.png" %}" width="125px" height="autho" alt="ava">
+                    {% endif %}
+                </div>
+                <div class="col col-lg-5">
+                    <p>
+                        Имя: <a href="{% url 'accounts:detail' user.pk %}">{{ user.first_name|default:user.username }}</a>,
+                        Фамилия: <a href="{% url 'accounts:detail' user.pk %}">{{ user.last_name|default:user.username }}</a>
+                    </p>
+                </div>
+                <div class="col col-lg-5">
+                    <p>
+                        <a href='{% url 'accounts:add_friend' %}' class="btn btn-primary" onclick="AddFriend(event)"
+                           id="{{ user.pk }}">Добавить в друзья</a>
+                    </p>
+                </div>
+            </div>
+            <hr class="mt-0">
+        {% endif %}
     {% endfor %}
 {% endif %}
+    <script type="application/javascript" src="{% static "js/add_friend.js" %}"></script>
 {% endblock %}

@@ -1,4 +1,9 @@
+import json
+
 from django.contrib.auth import authenticate, login, logout
+from django.http import JsonResponse
+from django.views.generic.base import View
+
 from .forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
@@ -10,6 +15,8 @@ from django.core.paginator import Paginator
 
 from accounts.forms import MyUserCreationForm,  ProfileChangeForm
 from django.views.generic import CreateView
+
+from .models import Profile
 
 
 class RegisterView(CreateView):
@@ -123,5 +130,15 @@ class UserChangeView(UserPassesTestMixin, UpdateView):
         return reverse('accounts:detail', kwargs={'pk': self.object.pk})
 
 
-
-
+class AddFriend(View):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        friend = get_user_model().objects.get(pk=data['id'])
+        user = get_user_model().objects.get(pk=self.request.user.pk)
+        profile = get_object_or_404(Profile, pk=user.pk)
+        if friend not in profile.friend.all():
+            profile.friend.add(friend)
+            profile.save()
+        else:
+            print('уже есть')
+        return JsonResponse({'status': 'ok'})
