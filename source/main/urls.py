@@ -20,11 +20,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from accounts.views import AllUserView
-from webapp.views import SendMessage
+from webapp.views import SendMessage, AllMessage
 
 urlpatterns = [
     path('', AllUserView.as_view(), name='users'),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('write-message/<int:id>/', SendMessage.as_view(), name='write_message'),
+    path('messages', AllMessage.as_view(), name='all_messages')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

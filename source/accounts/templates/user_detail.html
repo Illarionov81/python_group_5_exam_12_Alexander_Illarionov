@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block contant %}
-    <h1 class="ml-5 pt-5">Личная страница пользователя {{ user_obj.get_full_name|default:user_obj.username }}</h1>
+    <h1 class="ml-5 pt-5 pb-3">Личная страница пользователя {{ user_obj.get_full_name|default:user_obj.username }}</h1>
     <div class="row">
         <div class="col-4">
             {% if user_obj.profile.avatar %}
@@ -19,14 +19,16 @@
                 <img src="{% static "image/ava_.png" %}" alt="ava">
             {% endif %}
         </div>
-        <div class="col-5">
-            <p>Имя: {{ user_obj.first_name }} | Фамилия: {{ user_obj.last_name }}</p>
+        <div class="col-3">
+            <p>Имя: {{ user_obj.first_name }} </p>
+            <p>Фамилия: {{ user_obj.last_name }}</p>
             <p>Профиль на GitHub: <a href="{{ user_obj.profile.git_hub }}">{{ user_obj.profile.git_hub }}</a></p>
             <p>Почта: {{ user_obj.email }}</p>
             <p>О себе: {{ user_obj.profile.about_me }}</p>
         </div>
-        <div class="col-3">
-            {% if request.user != user_obj %}
+        <div class="col-5">
+        <p>
+           {% if request.user != user_obj %}
                 {% if request.user not in friends %}
                     <a href='{% url 'accounts:add_friend' %}' class="btn btn-primary my_button" onclick="AddFriend(event)"
                        id="{{ user_obj.pk }}">Добавить в друзья
@@ -39,6 +41,7 @@
                 <a href='{% url 'write_message' user_obj.pk %}' class="btn btn-success my_button">Отправить сообщение
                 </a>
             {% endif %}
+        </p>
         </div>
     </div>
 

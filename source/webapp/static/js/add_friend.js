@@ -66,3 +66,15 @@ async function DeleteFriend(event) {
     }
     location.reload()
 }
+
+async function LookMessage(event) {
+    event.preventDefault()
+    let Button = event.target;
+    let parrent_div = Button.parentElement.parentElement
+    let p = document.getElementsByClassName('massege')
+    for (let i = 0; i < p.length; i++){
+        p[i].style.display = 'none'
+    }
+    let n = parrent_div.querySelector('.massege');
+    n.style.display = ''
+}

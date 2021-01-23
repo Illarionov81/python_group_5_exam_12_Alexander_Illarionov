@@ -3,20 +3,20 @@
 {% block title %}Users: {% endblock %}
 
 {% block contant %}
-{% if user.is_authenticated and perms.auth.view_user %}
-    <hr>
-<div class="row">
-    <div class=" col-lg-12 text-center">
-        <h2 class="pt-4 pl-5"><b>All Users: </b></h2>
+{#{% if user.is_authenticated and perms.auth.view_user %}#}
+        <hr>
+    <div class="row">
+        <div class=" col-lg-12 text-center">
+            <h2 class="pt-4 pl-5"><b>All Users: </b></h2>
+        </div>
     </div>
-</div>
-<div class="row ml-5 pl-5">
-    <div class=" col-lg-12 text-center">
-        {% if is_paginated %}
-            {% include 'partial/pagination.html' %}
-        {% endif %}
+    <div class="row ml-5 pl-5">
+        <div class=" col-lg-12 text-center">
+            {% if is_paginated %}
+                {% include 'partial/pagination.html' %}
+            {% endif %}
+        </div>
     </div>
-</div>
 
     <hr>
     {% for user in users_list %}
@@ -46,12 +46,14 @@
                             id="{{ user.pk }}">Удалить из друзей
                         </a>
                         {% endif %}
+                        <a href='{% url 'write_message' user.pk %}' class="btn btn-success my_button">Отправить сообщение
+                        </a>
                     </p>
                 </div>
             </div>
             <hr class="mt-0">
         {% endif %}
     {% endfor %}
-{% endif %}
+{#{% endif %}#}
     <script type="application/javascript" src="{% static "js/add_friend.js" %}"></script>
 {% endblock %}

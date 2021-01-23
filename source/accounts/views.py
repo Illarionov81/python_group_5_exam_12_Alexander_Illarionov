@@ -68,13 +68,13 @@ class UserDetailView(LoginRequiredMixin, DetailView):
             return friend, None, False
 
 
-class AllUserView(PermissionRequiredMixin, ListView):
+class AllUserView(ListView):
     model = User
     template_name = 'users_view.html'
     context_object_name = 'users_list'
     paginate_by = 5
     paginate_orphans = 1
-    permission_required = "auth.view_user"
+    # permission_required = "auth.view_user"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

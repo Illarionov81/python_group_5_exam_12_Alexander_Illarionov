@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from webapp.forms import MessageForm
 from webapp.models import Message
@@ -19,4 +19,13 @@ class SendMessage(CreateView):
         message.author = self.request.user
         message.recipient = recipient
         message.save()
-        return redirect('users')
+        return redirect('all_messages')
+
+
+class AllMessage(ListView):
+    template_name = 'massege/all_messages.html'
+    context_object_name = 'messages'
+    model = Message
+    paginate_by = 5
+    paginate_orphans = 1
+    ordering = ['-sent_time']

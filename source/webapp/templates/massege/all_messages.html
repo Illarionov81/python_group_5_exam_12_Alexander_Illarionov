@@ -1,0 +1,59 @@
+{% extends 'people_base.html' %}
+{% load static %}
+{#{% block menu %}#}
+{#        <a class="text-white text-center px-3"  href="{% url 'projects' %}" >Отмена</a>#}
+{#{% endblock %}#}
+
+{% block title %}Переписка{% endblock %}
+
+{% block contant %}
+
+    <h3 class="col-md-6 pt-4 mt-5"><b>Сообщения: </b></h3>
+        <ul class="nav nav-pills justify-content-center mb-2">
+            <li class="nav-item">
+                <a class="nav-link active black" data-toggle="tab" href="#send">Отправленные</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link black" data-toggle="tab" href="#resive">Полученные</a>
+            </li>
+        </ul>
+    <div class="tab-content">
+        <div class="tab-pane active in" id="send">
+            <div class="row">
+                {% for massege in messages %}
+                    {% if massege.author == request.user %}
+                        <div class="box col-lg-12">
+                            <p>Получатель: <a href="{% url 'accounts:detail' massege.recipient.pk %}"> {{ massege.recipient }}</a></p>
+                            <p><a href="#" onclick="LookMessage(event)">
+                                {{ massege.sent_time|date:"d.m.Y" }}
+                                {{ massege.sent_time|time:"H:i" }}
+                            </a></p>
+                            <div class="massege box" style="display: none">
+                                {{ massege.message }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="resive">
+            <div class="row">
+                {% for massege in messages %}
+                    {% if massege.recipient == request.user %}
+                        <div class="box col-lg-12">
+                            <p>Отправитель: <a href="{% url 'accounts:detail' massege.author.pk %}"> {{ massege.author }}</a></p>
+                            <p><a href="#" onclick="LookMessage(event)">
+                                {{ massege.sent_time|date:"d.m.Y" }}
+                                {{ massege.sent_time|time:"H:i" }}
+                            </a></p>
+                            <div class="massege box" style="display: none">
+                                {{ massege.message }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+<script type="application/javascript" src="{% static "js/add_friend.js" %}"></script>
+{% endblock %}
