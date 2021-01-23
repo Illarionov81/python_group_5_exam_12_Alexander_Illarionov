@@ -1,26 +1,30 @@
 {% extends 'people_base.html' %}
 {% load static %}
-{#{% block menu %}#}
-{#        <a class="text-white text-center px-3"  href="{% url 'projects' %}" >Отмена</a>#}
-{#{% endblock %}#}
 
 {% block title %}Переписка{% endblock %}
 
 {% block contant %}
-
+{% if user.is_authenticated %}
     <h3 class="col-md-6 pt-4 mt-5"><b>Сообщения: </b></h3>
         <ul class="nav nav-pills justify-content-center mb-2">
             <li class="nav-item">
-                <a class="nav-link active black" data-toggle="tab" href="#send">Отправленные</a>
+                <a class="nav-link  black" data-toggle="tab" href="#send">Отправленные</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link black" data-toggle="tab" href="#resive">Полученные</a>
             </li>
         </ul>
     <div class="tab-content">
-        <div class="tab-pane active in" id="send">
+        <div class="tab-pane fade" id="send">
             <div class="row">
-                {% for massege in messages %}
+            <div class="row ml-5 pl-5">
+                <div class=" col-lg-12 text-center">
+                    {% if is_paginated %}
+                        {% include 'partial/pagination.html' %}
+                    {% endif %}
+                </div>
+            </div>
+                {% for massege in messages_list %}
                     {% if massege.author == request.user %}
                         <div class="box col-lg-12">
                             <p>Получатель: <a href="{% url 'accounts:detail' massege.recipient.pk %}"> {{ massege.recipient }}</a></p>
@@ -38,7 +42,14 @@
         </div>
         <div class="tab-pane fade" id="resive">
             <div class="row">
-                {% for massege in messages %}
+            <div class="row ml-5 pl-5">
+                <div class=" col-lg-12 text-center">
+                    {% if is_paginated_r %}
+                        {% include 'partial/pagination.html' %}
+                    {% endif %}
+                </div>
+            </div>
+                {% for massege in messages_list_recive %}
                     {% if massege.recipient == request.user %}
                         <div class="box col-lg-12">
                             <p>Отправитель: <a href="{% url 'accounts:detail' massege.author.pk %}"> {{ massege.author }}</a></p>
@@ -55,5 +66,6 @@
             </div>
         </div>
     </div>
+{% endif %}
 <script type="application/javascript" src="{% static "js/add_friend.js" %}"></script>
 {% endblock %}
