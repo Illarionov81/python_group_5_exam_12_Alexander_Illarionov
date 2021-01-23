@@ -1,0 +1,12 @@
+{% extends 'people_base.html' %}
+
+{% block menu %}
+{#        <a class="text-white text-center px-3"  href="{% url 'projects' %}" >Отмена</a>#}
+{% endblock %}
+
+{% block title %}Send massege{% endblock %}
+
+{% block contant %}
+    <h3 class="col-md-6 pt-4 mt-5"><b>Сообщение: </b></h3>
+    {% include 'partial/form.html' with  form_method='post' %}
+{% endblock %}

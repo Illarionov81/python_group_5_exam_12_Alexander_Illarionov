@@ -36,6 +36,8 @@
                         id="{{ user_obj.pk }}">Удалить из друзей
                     </a>
                 {% endif %}
+                <a href='{% url 'write_message' user_obj.pk %}' class="btn btn-success my_button">Отправить сообщение
+                </a>
             {% endif %}
         </div>
     </div>
