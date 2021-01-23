@@ -9,6 +9,7 @@ class Profile(models.Model):
     git_hub = models.URLField(null=True, blank=True, verbose_name='Git Hub')
     avatar = models.ImageField(null=True, blank=True, upload_to='user_pics', verbose_name='Аватар')
     about_me = models.TextField(max_length=300, null=True, blank=True, verbose_name='О себе')
+    friend = models.ManyToManyField(get_user_model(), blank=True, null=True, related_name='user', verbose_name='Друг')
 
     def __str__(self):
         return self.user.get_full_name() + "'s Profile"
@@ -16,4 +17,3 @@ class Profile(models.Model):
     class Meta:
         verbose_name = 'Профиль'
         verbose_name_plural = 'Профили'
-
