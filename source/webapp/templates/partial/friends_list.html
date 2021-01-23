@@ -9,7 +9,6 @@
 </div>
 
     {% for friend in friends_list %}
-        {% if friend != request.user %}
             <div class="row mt-4">
                 <div class="col col-lg-2 pl-5">
                     {% if friend.profile.avatar %}
@@ -32,7 +31,6 @@
                 </div>
             </div>
             <hr class="mt-0">
-        {% endif %}
         {% empty %}
         <h2 class="text-center">Нет друзей</h2>
     <hr>

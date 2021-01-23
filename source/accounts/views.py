@@ -53,6 +53,8 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context['friends_list'] = friends_list
         context['page_obj'] = page
         context['is_paginated'] = is_paginated
+        context['friends'] = user_profile.friend.all()
+        print(user_profile.friend.all())
         return context
 
     def paginate_comments(self, user):
@@ -80,6 +82,14 @@ class AllUserView(PermissionRequiredMixin, ListView):
         profile = get_object_or_404(Profile, pk=user.pk)
         context['friends'] = profile.friend.all()
         return context
+
+    def get_queryset(self):
+        data = super().get_queryset()
+        query = self.request.GET.get('search')
+        print(query)
+        if query:
+            data = self.model.objects.filter(first_name__icontains=query)
+        return data
 
 
 class UserPasswordChangeView(UserPassesTestMixin, UpdateView):
@@ -144,9 +154,12 @@ class AddFriend(View):
         friend = get_user_model().objects.get(pk=data['id'])
         user = get_user_model().objects.get(pk=self.request.user.pk)
         profile = get_object_or_404(Profile, pk=user.pk)
+        friends_profile = get_object_or_404(Profile, pk=friend.pk)
         if friend not in profile.friend.all():
             profile.friend.add(friend)
+            friends_profile.friend.add(user)
             profile.save()
+            friends_profile.save()
         else:
             print('уже есть')
         return reverse('users')
@@ -158,9 +171,12 @@ class DeleteFriend(View):
         friend = get_user_model().objects.get(pk=data['id'])
         user = get_user_model().objects.get(pk=self.request.user.pk)
         profile = get_object_or_404(Profile, pk=user.pk)
+        friends_profile = get_object_or_404(Profile, pk=friend.pk)
         if friend in profile.friend.all():
             profile.friend.remove(friend)
+            friends_profile.friend.remove(user)
             profile.save()
+            friends_profile.save()
         else:
             print('нет')
         return reverse('accounts:detail')

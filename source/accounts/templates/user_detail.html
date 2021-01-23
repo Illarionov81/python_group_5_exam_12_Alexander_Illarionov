@@ -19,11 +19,24 @@
                 <img src="{% static "image/ava_.png" %}" alt="ava">
             {% endif %}
         </div>
-        <div class="col-8">
+        <div class="col-5">
             <p>Имя: {{ user_obj.first_name }} | Фамилия: {{ user_obj.last_name }}</p>
             <p>Профиль на GitHub: <a href="{{ user_obj.profile.git_hub }}">{{ user_obj.profile.git_hub }}</a></p>
             <p>Почта: {{ user_obj.email }}</p>
             <p>О себе: {{ user_obj.profile.about_me }}</p>
+        </div>
+        <div class="col-3">
+            {% if request.user != user_obj %}
+                {% if request.user not in friends %}
+                    <a href='{% url 'accounts:add_friend' %}' class="btn btn-primary my_button" onclick="AddFriend(event)"
+                       id="{{ user_obj.pk }}">Добавить в друзья
+                    </a>
+                    {% else %}
+                    <a href='{% url 'accounts:delete_friend' %}' class="btn btn-warning my_button" onclick="DeleteFriend(event)"
+                        id="{{ user_obj.pk }}">Удалить из друзей
+                    </a>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 

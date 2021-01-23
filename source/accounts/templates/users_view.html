@@ -42,7 +42,7 @@
                            id="{{ user.pk }}">Добавить в друзья
                         </a>
                         {% else %}
-                        <a href='{% url 'accounts:add_friend' %}' class="btn btn-warning my_button" onclick="DeleteFriend(event)"
+                        <a href='{% url 'accounts:delete_friend' %}' class="btn btn-warning my_button" onclick="DeleteFriend(event)"
                             id="{{ user.pk }}">Удалить из друзей
                         </a>
                         {% endif %}

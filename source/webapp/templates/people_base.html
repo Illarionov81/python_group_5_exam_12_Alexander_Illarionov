@@ -39,14 +39,14 @@
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                  <ul class="text-white text-center pt-2 px-3 mb-0">
-                    {% block search %}
-                        <div class="search-form">
-                            <form action="#" method="GET">
-                                {{ search_form.search }}
-                                <input type="submit" value="Найти">
-                            </form>
-                        </div>
-                    {% endblock %}
+                {% block search %}
+                    <div class="search-form">
+                        <form action="{% url 'accounts:users' %}" method="GET">
+                            <input type="text" name="search">
+                            <input type="submit" value="Найти">
+                        </form>
+                    </div>
+                {% endblock %}
                 </ul>
             </div>
         </div>
