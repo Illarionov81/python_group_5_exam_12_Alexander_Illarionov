@@ -1,6 +1,7 @@
 import json
 
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
 from django.http import JsonResponse
 from django.views.generic.base import View
 
@@ -38,7 +39,7 @@ class RegisterView(CreateView):
         return next_url
 
 
-class UserDetailView(LoginRequiredMixin, DetailView):
+class UserDetailView( DetailView):
     model = get_user_model()
     template_name = 'user_detail.html'
     context_object_name = 'user_obj'
@@ -54,7 +55,6 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context['page_obj'] = page
         context['is_paginated'] = is_paginated
         context['friends'] = user_profile.friend.all()
-        print(user_profile.friend.all())
         return context
 
     def paginate_comments(self, user):
@@ -74,13 +74,15 @@ class AllUserView(ListView):
     context_object_name = 'users_list'
     paginate_by = 5
     paginate_orphans = 1
-    # permission_required = "auth.view_user"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = self.request.user
-        profile = get_object_or_404(Profile, pk=user.pk)
-        context['friends'] = profile.friend.all()
+        try:
+            user = self.request.user
+            profile = get_object_or_404(Profile, pk=user.pk)
+            context['friends'] = profile.friend.all()
+        except:
+            pass
         return context
 
     def get_queryset(self):
@@ -88,7 +90,7 @@ class AllUserView(ListView):
         query = self.request.GET.get('search')
         print(query)
         if query:
-            data = self.model.objects.filter(first_name__icontains=query)
+            data = self.model.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
         return data
 
 
@@ -148,7 +150,7 @@ class UserChangeView(UserPassesTestMixin, UpdateView):
         return reverse('accounts:detail', kwargs={'pk': self.object.pk})
 
 
-class AddFriend(View):
+class AddFriend(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
         friend = get_user_model().objects.get(pk=data['id'])
@@ -180,3 +182,4 @@ class DeleteFriend(View):
         else:
             print('нет')
         return reverse('accounts:detail')
+

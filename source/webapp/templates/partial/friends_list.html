@@ -24,10 +24,12 @@
                     </p>
                 </div>
                 <div class="col col-lg-5">
-                    <p>
-                        <a href='{% url 'accounts:delete_friend' %}' class="btn btn-warning my_button" onclick="DeleteFriend(event)"
-                           id="{{ friend.pk }}">Удалить из друзей</a>
-                    </p>
+                    {% if request.user.is_authenticated and request.user == user_obj %}
+                        <p>
+                            <a href='{% url 'accounts:delete_friend' %}' class="btn btn-warning my_button" onclick="DeleteFriend(event)"
+                               id="{{ friend.pk }}">Удалить из друзей</a>
+                        </p>
+                    {% endif %}
                 </div>
             </div>
             <hr class="mt-0">
